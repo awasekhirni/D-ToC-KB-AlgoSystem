@@ -1,0 +1,18 @@
+{
+  "id": "node_8f7e6d5c-4b3a-2910-0099",
+  "title": "Backpropagation in Convolutional Networks",
+  "semantic_summary": "Alias pointer to 'node_8f7e6d5c-4b3a-2910-0001'. This node exists solely to provide a navigational path for users exploring Computer Vision to find how backpropagation applies to spatial data.",
+  "paradigm": "Thematic",
+  "parent_id": "node_8f7e6d5c-4b3a-2910-0050", 
+  "children_ids": [],
+  "content_refs": [],
+  "content_embeddings": [],
+  "depth": 2,
+  "is_alias": true,
+  "points_to_id": "node_8f7e6d5c-4b3a-2910-0001",
+  "last_audit_timestamp": "2026-10-21T10:00:00Z",
+  "metrics": {
+    "token_count": 0,
+    "semantic_variance": 0.0
+  }
+}
