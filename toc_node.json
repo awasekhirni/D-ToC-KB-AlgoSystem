@@ -1,0 +1,35 @@
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "title": "Quantum Entanglement",
+  "semantic_summary": "This node covers the theoretical foundations, mathematical formulations (e.g., Bell's Theorem), and experimental verification of quantum entanglement. INCLUDE: Non-locality, EPR paradox, and state teleportation protocols. EXCLUDE: Practical quantum computing algorithms (belongs in 'Quantum Algorithms'), and historical biographies of physicists (belongs in 'History of Physics').",
+  "parent_id": "123e4567-e89b-12d3-a456-426614174000",
+  "children_ids": [
+    "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+    "6ba7b811-9dad-11d1-80b4-00c04fd430c8"
+  ],
+  "content_refs": [
+    {
+      "ref_id": "vec_chunk_84920",
+      "source_document": "arxiv_2024_entanglement_review.pdf",
+      "page_or_section": "Section 3.1",
+      "text_snippet": "Bell's inequalities demonstrate that no local hidden variable theory can reproduce all the predictions of quantum mechanics..."
+    },
+    {
+      "ref_id": "vec_chunk_84921",
+      "source_document": "wiki_quantum_mechanics",
+      "page_or_section": "Overview",
+      "text_snippet": "Entanglement is produced when particles interact in ways such that the quantum state of each particle..."
+    }
+  ],
+  "metrics": {
+    "token_count": 14532,
+    "semantic_variance": 0.18,
+    "last_restructured_at": "2026-10-20T14:30:00Z"
+  },
+  "metadata": {
+    "depth": 2,
+    "created_at": "2025-06-15T09:00:00Z",
+    "updated_at": "2025-11-21T10:15:00Z",
+    "status": "active"
+  }
+}
