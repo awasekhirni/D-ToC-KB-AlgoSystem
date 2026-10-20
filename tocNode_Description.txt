@@ -1,0 +1,10 @@
+id: UUID. The primary key.
+title: Human-readable name.
+semantic_summary: The crucial "boundary definition" used by the LLM for routing and auditing.
+paradigm: Tracks how the node is organized (Thematic, Chronological, etc.) to help the LLM pivot if the node gets overloaded.
+parent_id & children_ids: Maintains the strict Tree hierarchy.
+depth: Integer. Used to enforce the MAX_DEPTH limit and prevent infinite recursion.
+is_alias & points_to_id: Creates the DAG overlay. If is_alias is true, the routing algorithm immediately redirects to points_to_id.
+last_audit_timestamp: ISO 8601 date. Used by the background agent to trigger semantic drift checks.
+metrics.token_count: Triggers the restructuring phase when it exceeds the limit.
+metrics.semantic_variance: A float (0.0 to 1.0) calculated via clustering. Triggers restructuring if the node becomes too topically diverse.
