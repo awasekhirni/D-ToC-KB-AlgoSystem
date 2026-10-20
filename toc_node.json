@@ -1,35 +1,29 @@
 {
-  "id": "550e8400-e29b-41d4-a716-446655440000",
-  "title": "Quantum Entanglement",
-  "semantic_summary": "This node covers the theoretical foundations, mathematical formulations (e.g., Bell's Theorem), and experimental verification of quantum entanglement. INCLUDE: Non-locality, EPR paradox, and state teleportation protocols. EXCLUDE: Practical quantum computing algorithms (belongs in 'Quantum Algorithms'), and historical biographies of physicists (belongs in 'History of Physics').",
-  "parent_id": "123e4567-e89b-12d3-a456-426614174000",
+  "id": "node_8f7e6d5c-4b3a-2910-0001",
+  "title": "Backpropagation Algorithm",
+  "semantic_summary": "This node covers the mathematical derivation, chain rule application, and computational graph traversal of the backpropagation algorithm used in training neural networks. EXCLUDE high-level architectural overviews of neural networks (belongs in 'Network Architectures') and EXCLUDE specific optimizer variants like Adam or SGD (belongs in 'Optimization Algorithms').",
+  "paradigm": "Procedural/Mathematical",
+  "parent_id": "node_8f7e6d5c-4b3a-2910-0000",
   "children_ids": [
-    "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
-    "6ba7b811-9dad-11d1-80b4-00c04fd430c8"
+    "node_8f7e6d5c-4b3a-2910-0002",
+    "node_8f7e6d5c-4b3a-2910-0003"
   ],
   "content_refs": [
-    {
-      "ref_id": "vec_chunk_84920",
-      "source_document": "arxiv_2024_entanglement_review.pdf",
-      "page_or_section": "Section 3.1",
-      "text_snippet": "Bell's inequalities demonstrate that no local hidden variable theory can reproduce all the predictions of quantum mechanics..."
-    },
-    {
-      "ref_id": "vec_chunk_84921",
-      "source_document": "wiki_quantum_mechanics",
-      "page_or_section": "Overview",
-      "text_snippet": "Entanglement is produced when particles interact in ways such that the quantum state of each particle..."
-    }
+    "doc_chunk_9921",
+    "doc_chunk_9922",
+    "doc_chunk_9925"
   ],
+  "content_embeddings": [
+    [0.012, -0.045, 0.088, 0.112],
+    [0.015, -0.041, 0.085, 0.110],
+    [0.011, -0.048, 0.090, 0.115]
+  ],
+  "depth": 2,
+  "is_alias": false,
+  "points_to_id": null,
+  "last_audit_timestamp": "2026-10-15T08:30:00Z",
   "metrics": {
-    "token_count": 14532,
-    "semantic_variance": 0.18,
-    "last_restructured_at": "2026-10-20T14:30:00Z"
-  },
-  "metadata": {
-    "depth": 2,
-    "created_at": "2025-06-15T09:00:00Z",
-    "updated_at": "2025-11-21T10:15:00Z",
-    "status": "active"
+    "token_count": 14500,
+    "semantic_variance": 0.32
   }
 }
