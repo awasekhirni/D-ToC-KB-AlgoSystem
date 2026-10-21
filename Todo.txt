@@ -1,0 +1,12 @@
+2025-26 Copyright Beta ORI Inc. Canada. All Rights Reserved.
+Awase Khirni Syed 
+
+LLM code interactions from scratch will be time consuming, to build knowledge base (thematically) to avoid hallucination.
+I think the strategy should be to look at alternative approaches. Scaffolding from the current set of tools. 
+One strategy i think would be to use an orchestration framework like langgraph or autogen 
+1. create an agent for routing 
+2. create an agent for restructuring 
+3. create an agent for auditing/verification of knowledge 
+4. framework to handle state management similar to redux design pattern (external state management) that would facilitate memory to be 
+passed between these agents. 
+5. framework would handle the actual tree/graph data structure adn k-means clustering 
