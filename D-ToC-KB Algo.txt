@@ -1,0 +1,46 @@
+#2025-26 Beta ORI Inc. Canada. All Rights Reserved.
+Awase Khirni Syed
+
+D-Toc-KB Algo
+
+Phase 1: Initialization (Genesis)
+As the LLM starts analyzing the prompt, or extracting knowledge from various source using RAG.
+The model needs to define the categroization i.e. "organizing the information primarily by thematic concepts"
+create nodes: instantiate root and level 1 nodes, setting depth=1 and assigning the categorization paradigm.
+
+Phase 2: Smart Routing (Ingestion & Alias Resolution)
+As and when the data arrives, the AI model must file it while respecting depth limits and alias pointers 
+Alias Resolution: If the routing path hits a node where is_alias== True, immediately redirect to points_to_id.
+Tree Traversal: Calculate semantic similarity with children 
+Max Depth Handling ( to solve infinite recursion problem): if the best match is a child, but child.depth=== MAX_DEPTH, do not descend. 
+Action: create a sibling spillover node (e.g., Quantum Mechanics (Part 2)") under the current parent, or trigger a Paradigm pivot at the parent level.
+(e.g.: change the parent from "Thematic" to "Chronological" and regenerate its children)
+Store: Append data to the final node. 
+
+
+Phase 3: Context-Aware Restructuring (using the "Librarian metaphor / logic" to organize information)
+when a node becomes overloaded, it must be split without exceeding the LLM's AI models context window.
+we need to add a trigger here 
+Trigger: token_count > max_limit or semantic_variance > threshold.
+RAG clustering (Solving context limits): We use chunking strategy here to selectively feed content to the LLM.In addition to this,
+we run K-means clustering on the node's content embeddings to find 5 to 10 natural and relevant thematic clusters 
+We use a lightweight model to generate/summarize for each cluster. 
+
+Restructure Prompt: Feed only the cluster summaries generated to the main process/model/LLM. "Here are the core themes currently mixed in 
+[Specific Node Title]. Subsequently, propose a new sub-ToC to separate these themes.
+
+Executing the Split: In the next step, we create new children, clear the parent's content_refs, and re-route the existing data into new children.
+
+
+Phase 4: Auditing & Graph Overlay (Solving Drift & Rigidity) 
+
+Semantic Drift Audit (Background Process): A background agent periodically selects nodes where last_audit_timestaamp is older than XXX days.
+it samples 10 random content_refs and asks the AI model/LLM. "Does this sample accurately reflect the semantic summary of [Specific Node Title]? if not, rewrite the summary.
+(in future, this could be a self improvising/ reinforced learning agent) that would autonmously iterate to reflect accurate information as it evolves.
+If the current information is not accurate, research and rewrite the accurate summary to the knowledge base. 
+
+Alias Creation (Solving Rigid Hierarchy): During the Audit or Routing phase, if the LLM detects that a piece of data strongly belongs to a completely different banch of tree, it 
+creates an Alias Node in that distant branch pointing to the primary data location. 
+
+This could serve as an unbiased reference library/comprehensive knowledge base that would help us build AI based tutoring from kindergarten to Ph.D eliminating bias in education.
+This would help in giving equal access to knowledge for all.
