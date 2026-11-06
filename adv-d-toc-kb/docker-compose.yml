@@ -1,0 +1,103 @@
+version: "3.9"
+
+x-backend-base: &backend-base
+  build:
+    context: ./backend
+    dockerfile: Dockerfile
+  environment:
+    TOCKB_DATABASE_URL: postgresql+asyncpg://tockb:${POSTGRES_PASSWORD:-tockb}@postgres:5432/tockb
+    TOCKB_REDIS_URL: redis://redis:6379/0
+    TOCKB_OPENAI_API_KEY: ${TOCKB_OPENAI_API_KEY:?OPENAI_API_KEY is required}
+    TOCKB_ADMIN_TOKEN: ${TOCKB_ADMIN_TOKEN:-}
+    TOCKB_MAX_DEPTH: ${TOCKB_MAX_DEPTH:-5}
+    TOCKB_MAX_DEPTH_STRATEGY: ${TOCKB_MAX_DEPTH_STRATEGY:-spillover}
+    TOCKB_EMBEDDING_MODEL: ${TOCKB_EMBEDDING_MODEL:-text-embedding-3-large}
+    TOCKB_EMBEDDING_DIMENSIONS: ${TOCKB_EMBEDDING_DIMENSIONS:-1536}
+    TOCKB_LLM_MODEL: ${TOCKB_LLM_MODEL:-gpt-4o-mini}
+    TOCKB_ALIAS_DISCOVERY_ENABLED: ${TOCKB_ALIAS_DISCOVERY_ENABLED:-true}
+    TOCKB_LOG_LEVEL: ${TOCKB_LOG_LEVEL:-INFO}
+    TOCKB_LOG_FORMAT: ${TOCKB_LOG_FORMAT:-json}
+  volumes:
+    - ./backend:/app
+  depends_on:
+    postgres:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+  restart: unless-stopped
+  networks: [tockb]
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: tockb
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-tockb}
+      POSTGRES_DB: tockb
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tockb -d tockb"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks: [tockb]
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes", "--save", ""]
+    volumes:
+      - redis_data:/data
+    ports:
+      - "127.0.0.1:6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks: [tockb]
+
+  api:
+    <<: *backend-base
+    command: >
+      sh -c "alembic upgrade head &&
+             uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --workers 2"
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 20s
+
+  worker:
+    <<: *backend-base
+    command: celery -A src.workers.celery_app worker --loglevel=INFO --concurrency=4
+
+  beat:
+    <<: *backend-base
+    command: celery -A src.workers.celery_app beat --loglevel=INFO
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE: ${VITE_API_BASE:-http://localhost:8000}
+    ports:
+      - "3000:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    networks: [tockb]
+
+volumes:
+  pg_data:
+  redis_data:
+
+networks:
+  tockb:
+    driver: bridge

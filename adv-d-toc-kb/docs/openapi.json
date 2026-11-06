@@ -1,0 +1,52 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Adv-D-ToC-KB",
+    "version": "0.1.0",
+    "description": "A self-organising, LLM-orchestrated knowledge base. Ingests unstructured text, routes it into a depth-bounded tree, restructures overloaded nodes, audits for drift, and overlays aliases to form a navigable DAG."
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Liveness check",
+        "responses": {"200": {"description": "OK"}}
+      }
+    },
+    "/toc/{root_id}": {
+      "get": {
+        "summary": "Get full subtree",
+        "parameters": [{"name": "root_id", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}],
+        "responses": {"200": {"description": "Tree"}, "404": {"description": "Not found"}}
+      }
+    },
+    "/ingest": {
+      "post": {
+        "summary": "Ingest content",
+        "requestBody": {"content": {"application/json": {"schema": {"type": "object", "properties": {"root_id": {"type": "string", "format": "uuid"}, "content": {"type": "string"}, "title_hint": {"type": "string"}, "summary_hint": {"type": "string"}}}}}},
+        "responses": {"201": {"description": "Created"}, "404": {"description": "Root not found"}, "422": {"description": "Validation error"}}
+      }
+    },
+    "/audit/log/{node_id}": {
+      "get": {
+        "summary": "Get audit log for node",
+        "parameters": [{"name": "node_id", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}, {"name": "limit", "in": "query", "schema": {"type": "integer", "default": 50}}],
+        "responses": {"200": {"description": "Audit log entries"}}
+      }
+    },
+    "/audit/run": {
+      "post": {
+        "summary": "Trigger audit sweep or single-node audit",
+        "parameters": [{"name": "node_id", "in": "query", "schema": {"type": "string", "format": "uuid"}}, {"name": "batch_size", "in": "query", "schema": {"type": "integer"}}],
+        "responses": {"200": {"description": "Enqueued"}}
+      }
+    },
+    "/alias": {
+      "post": {
+        "summary": "Manually create an alias",
+        "requestBody": {"content": {"application/json": {"schema": {"type": "object", "properties": {"target_parent_id": {"type": "string", "format": "uuid"}, "primary_node_id": {"type": "string", "format": "uuid"}}, "required": ["target_parent_id", "primary_node_id"]}}}},
+        "responses": {"201": {"description": "Created"}, "422": {"description": "Invariant violation"}}
+      }
+    }
+  },
+  "_note": "This is a hand-written summary. Run `make openapi` against a live instance to regenerate the full machine-generated spec."
+}
